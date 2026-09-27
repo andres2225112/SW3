@@ -3,15 +3,12 @@ package co.edu.demoacademico.repositories;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
 
 import co.edu.demoacademico.model.Estudiante;
 
-@Repository
 public interface EstudianteRepository extends JpaRepository<Estudiante, Long> {
 
-    // ============================
-    // ZONA DE ACCESO A LA BD (JPA)
-    // ============================
+    boolean existsByEmail(String email);
+
     Optional<Estudiante> findByEmail(String email);
 }
