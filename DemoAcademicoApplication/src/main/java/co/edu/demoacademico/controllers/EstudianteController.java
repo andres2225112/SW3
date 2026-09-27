@@ -2,6 +2,9 @@ package co.edu.demoacademico.controllers;
 
 import java.util.List;
 
+import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,16 +44,21 @@ public class EstudianteController {
         return service.listar();
     }
 
+    // Ejemplo: /api/estudiantes/buscar?email=ana@demo.com
     @GetMapping("/buscar")
-    public ResponseEntity<Estudiante> buscarPorEmail(@RequestParam String email) {
-        return service.buscarPorEmail(email)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public Estudiante buscarPorEmail(@RequestParam String email) {
+        return service.buscarPorEmail(email);
     }
 
     @ExceptionHandler(EmailAlreadyExistsException.class)
     public ResponseEntity<String> handleEmailAlreadyExists(EmailAlreadyExistsException e) {
         return ResponseEntity.badRequest().body(e.getMessage());
+    }
+
+    // Ejemplo: /api/estudiantes/pagina?page=0&size=5&sort=nombre,asc
+    @GetMapping("/pagina")
+    public Page<Estudiante> listarPaginado(@ParameterObject Pageable pageable) {
+        return service.listar(pageable);
     }
 
 }
