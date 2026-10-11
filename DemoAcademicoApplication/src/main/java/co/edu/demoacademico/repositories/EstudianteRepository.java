@@ -1,4 +1,4 @@
-package co.edu.demoacademico.repositories;
+package co.edu.demoacademico.repository;
 
 import java.util.Optional;
 
