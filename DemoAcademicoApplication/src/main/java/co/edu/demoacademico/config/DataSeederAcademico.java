@@ -1,18 +1,20 @@
 package co.edu.demoacademico.config;
 
-import co.edu.demoacademico.model.Asignatura;
-import co.edu.demoacademico.model.Grupo;
-import co.edu.demoacademico.model.Programa;
-import co.edu.demoacademico.repository.AsignaturaRepository;
-import co.edu.demoacademico.repository.GrupoRepository;
-import co.edu.demoacademico.repository.ProgramaRepository;
-import com.github.javafaker.Faker;
+import java.util.Locale;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.util.Locale;
+import com.github.javafaker.Faker;
+
+import co.edu.demoacademico.asignaturas.Asignatura;
+import co.edu.demoacademico.grupos.Grupo;
+import co.edu.demoacademico.programas.Programa;
+import co.edu.demoacademico.asignaturas.AsignaturaRepository;
+import co.edu.demoacademico.grupos.GrupoRepository;
+import co.edu.demoacademico.programas.ProgramaRepository;
 
 @Configuration
 public class DataSeederAcademico {
@@ -62,6 +64,7 @@ public class DataSeederAcademico {
                 a.setNombre("Asignatura " + faker.educator().course());
                 a.setCreditos(2 + (i % 3));
                 a.setPrograma(p);
+
                 asignaturas[i] = asignaturaRepo.save(a);
             }
 
@@ -73,6 +76,7 @@ public class DataSeederAcademico {
                 g.setCodigoGrupo("G-" + a.getCodigo() + "-" + (i + 1));
                 g.setCupoMax(2 + (i % 4)); // entre 2 y 5
                 g.setAsignatura(a);
+
                 grupoRepo.save(g);
             }
         };
